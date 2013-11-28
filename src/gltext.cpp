@@ -20,7 +20,9 @@
 #endif
 //}
 
-#include "picture2d.h"
+#define STBI_HEADER_FILE_ONLY
+#define STBI_FAILURE_USERMSG
+#include "stb_image.c"
 
 //#include "sys_functions.h"
 
@@ -397,10 +399,13 @@ unsigned int GLText::m_load_texture(const char* texture_file_path)
 {
     // load and register the texture in opengl. return opengl texture id
 
-    Picture2d image;
-    if (!image.load(texture_file_path))
+    int w, h, n;
+    unsigned char *image = stbi_load(texture_file_path, &w, &h, &n, 4);
+
+    if (!image)
     {
         error = "texture file loading failed";
+        // stbi_failure_reason()
         return 0;
     }
 
@@ -412,12 +417,14 @@ unsigned int GLText::m_load_texture(const char* texture_file_path)
     // change state of the selected texture object
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixels());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    stbi_image_free(image);
 
     return tex_id;
 }

@@ -12,13 +12,11 @@ extra_link_args = []
 if sys.platform == "darwin":
     # negate the -g debugging flag that got always added in macosx by default
     extra_compile_args = ["-g0"]
-    libraries = ["png"]
-    #libraries = ["png", "z"]
     #include_dirs = ["/usr/local/include"]
 elif sys.platform == "win32":
-    libraries = ["libpng", "zdll", "OpenGL32"]
+    libraries = ["OpenGL32"]
 elif sys.platform == "linux2":
-    libraries = ["png", "z"]
+    pass
 else:
     raise RuntimeError("platform %s not supported" % (sys.platform))
 
@@ -29,7 +27,7 @@ ext_gltext = Extension(
     #pyrex_cplus=1,
     sources=["gltext.pyx",
              "../src/gltext.cpp",
-             "../src/picture2d.cpp",
+             "../src/stb_image.c",
              "../src/sys_functions.cpp"],
     include_dirs=["../include/"],# + include_dirs,
     library_dirs=[],
@@ -43,7 +41,7 @@ ext_gltext = Extension(
 
 setup(
     name         = "gltext",
-    version      = "0.1.1",
+    version      = "0.2.1",
     license      = "MIT",
     description  = "python wrapper for a simple opengl text renderer",
     long_description  = """nah""",

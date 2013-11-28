@@ -6,32 +6,34 @@ cdef extern from "sys_functions.h":
 
 cdef extern from "gltext.h":
 
-    struct cpp_GLText "GLText":
+    cdef cppclass cpp_GLText "GLText":
 
-        void  (*init)  ()
-        float (*width) (char* text)
+        cpp_GLText(char* font_path_name)
+
+        void  init()
+        float width(char* text)
 
 
-        void (*set_fgcolor)    (float r, float g, float b, float a)
-        void (*set_bgcolor)    (float r, float g, float b, float a)
-        void (*set_z)          (float z)
-        void (*set_depth_test) (int test)
+        void set_fgcolor    (float r, float g, float b, float a)
+        void set_bgcolor    (float r, float g, float b, float a)
+        void set_z          (float z)
+        void set_depth_test (int test)
 
-        void (*drawtl)  (char* text, float x, float y)
-        void (*drawtr)  (char* text, float x, float y)
-        void (*drawtm)  (char* text, float x, float y)
+        void drawtl  (char* text, float x, float y)
+        void drawtr  (char* text, float x, float y)
+        void drawtm  (char* text, float x, float y)
 
-        void (*drawbl)  (char* text, float x, float y)
-        void (*drawbr)  (char* text, float x, float y)
-        void (*drawbm)  (char* text, float x, float y)
+        void drawbl  (char* text, float x, float y)
+        void drawbr  (char* text, float x, float y)
+        void drawbm  (char* text, float x, float y)
 
-        void (*drawml)  (char* text, float x, float y)
-        void (*drawmr)  (char* text, float x, float y)
-        void (*drawmm)  (char* text, float x, float y)
+        void drawml  (char* text, float x, float y)
+        void drawmr  (char* text, float x, float y)
+        void drawmm  (char* text, float x, float y)
 
-        void (*drawbll) (char* text, float x, float y)
-        void (*drawblr) (char* text, float x, float y)
-        void (*drawblm) (char* text, float x, float y)
+        void drawbll (char* text, float x, float y)
+        void drawblr (char* text, float x, float y)
+        void drawblm (char* text, float x, float y)
 
 
         float height
@@ -45,13 +47,10 @@ cdef extern from "gltext.h":
         float bgcolor_r, bgcolor_g, bgcolor_b, bgcolor_a
 
 
-        char* (*font_file_name)    ()
-        char* (*font_file_path)    ()
-        char* (*texture_file_name) ()
+        char* font_file_name    ()
+        char* font_file_path    ()
+        char* texture_file_name ()
         char* error
-
-    cpp_GLText* new_GLText "new GLText" (char* font_path_name)
-    void cpp_delete "delete " (void *o)
 
 
 cdef class GLText:
@@ -59,16 +58,18 @@ cdef class GLText:
     cdef cpp_GLText* thisptr
 
     def __cinit__(self, char* font_path_name):
-        self.thisptr = new_GLText(font_path_name)
-        if self.thisptr.error: raise Exception("error loading font '%s': %s" % (self.thisptr.font_file_path(), self.thisptr.error))
+        self.thisptr = new cpp_GLText(font_path_name)
+        if self.thisptr.error:
+            raise Exception("error loading font '%s': %s" % (self.thisptr.font_file_path(), self.thisptr.error))
 
     def __dealloc__(self):
-        cpp_delete(self.thisptr)
+        del self.thisptr
 
 
     def init(self):
         self.thisptr.init()
-        if self.thisptr.error: raise Exception("error loading font '%s' texture '%s': %s" % (self.thisptr.font_file_path(), self.thisptr.texture_file_name(), self.thisptr.error))
+        if self.thisptr.error:
+            raise Exception("error loading font '%s' texture '%s': %s" % (self.thisptr.font_file_path(), self.thisptr.texture_file_name(), self.thisptr.error))
 
     def width(self, char* text):
         """ return string width in pixels """
