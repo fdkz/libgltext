@@ -10,6 +10,8 @@ Building python wrappers:
     cd pywrapper
     python setup.py build
 
+    macosx Yosemite: works without problems.
+    macosx Mountain Lion: for build errors workaround look further down.
 
     Windows 8.1: tested with Visual C++ 2012 Express, Python 2.7.3 64 bit
         run cmd.exe
@@ -22,8 +24,7 @@ Prerequisites:
 
     pip install cython
 
-
-macosx (At least on Mountain Lion. Not tested on other versions):
+macosx Mountain Lion build errors workaround:
 
   To prevent errors like this:
 

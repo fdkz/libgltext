@@ -1,6 +1,7 @@
+import os.path
+
 from OpenGL.GL import *
 from PIL import Image
-import os.path
 
 
 class GLText:
@@ -63,50 +64,50 @@ class GLText:
 
     # top
 
-    def drawtl(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawtl(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+16)
 
-    def drawtr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawtr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+16)
 
-    def drawtm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawtm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+16)
 
     # bottom
 
-    def drawbl(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbl(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+32)
-    
-    def drawbr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+
+    def drawbr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+32)
 
-    def drawbm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+32)
 
     # middle
 
-    def drawml(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawml(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+64)
-    
-    def drawmr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+
+    def drawmr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+64)
 
-    def drawmm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawmm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+64)
 
     # baseline
 
-    def drawbll(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbll(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+8)
-    
-    def drawblr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+
+    def drawblr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+8)
 
-    def drawblm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawblm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+8)
 
 
-    def draw(self, text, x, y, fgcolor = None, bgcolor = None, z = None, positioning = None):
+    def draw(self, text, x, y, fgcolor=None, bgcolor=None, z=None, positioning=None):
         """
         if fgcolor or bgcolor or z are None, previous values are used.
         if z is False, opengl depth-testing is disabled for text rendering. (but still.. z_near/z_far clipping occurs)
@@ -138,7 +139,7 @@ class GLText:
         # TODO: apply. reduce. sum. map.. anything that can speed things up!!
         str_width = self.width(text)
         x, y = self._fix_pos(x, y, str_width, positioning)
-        
+
         if str_width > 0:
 
             glEnable(GL_BLEND)
@@ -174,7 +175,7 @@ class GLText:
 
             for c in text:
                 char = self.char_list[ord(c)]
-                	
+
                 # up-left
                 glTexCoord2f(char.pos1[0], char.pos1[1])
                 glVertex3f(x + char.ofs[0], y + char.ofs[1], z)

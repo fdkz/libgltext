@@ -1,7 +1,7 @@
-from PIL import Image
 import os.path
 
 from pyglet.gl import *
+from PIL import Image
 
 
 class GLText:
@@ -64,50 +64,50 @@ class GLText:
 
     # top
 
-    def drawtl(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawtl(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+16)
 
-    def drawtr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawtr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+16)
 
-    def drawtm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawtm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+16)
 
     # bottom
 
-    def drawbl(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbl(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+32)
 
-    def drawbr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+32)
 
-    def drawbm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+32)
 
     # middle
 
-    def drawml(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawml(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+64)
 
-    def drawmr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawmr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+64)
 
-    def drawmm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawmm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+64)
 
     # baseline
 
-    def drawbll(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawbll(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 1+8)
 
-    def drawblr(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawblr(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 2+8)
 
-    def drawblm(self, text, x, y, fgcolor = None, bgcolor = None, z = None):
+    def drawblm(self, text, x, y, fgcolor=None, bgcolor=None, z=None):
         self.draw(text, x, y, fgcolor, bgcolor, z, 4+8)
 
 
-    def draw(self, text, x, y, fgcolor = None, bgcolor = None, z = None, positioning = None):
+    def draw(self, text, x, y, fgcolor=None, bgcolor=None, z=None, positioning=None):
         """
         if fgcolor or bgcolor or z are None, previous values are used.
         if z is False, opengl depth-testing is disabled for text rendering. (but still.. z_near/z_far clipping occurs)
@@ -252,8 +252,9 @@ class GLText:
 
         tex_id = c_uint(0)
         glGenTextures(1, byref(tex_id))
+        tex_id = tex_id.value
 
-        glBindTexture(GL_TEXTURE_2D, tex_id.value)
+        glBindTexture(GL_TEXTURE_2D, tex_id)
 
         # change state of the selected texture object
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
@@ -262,7 +263,7 @@ class GLText:
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ix, iy, 0, GL_RGBA, GL_UNSIGNED_BYTE, imagestring)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 
-        return tex_id.value
+        return tex_id
 
 
     def _fix_pos(self, x, y, w, positioning):
