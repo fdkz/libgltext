@@ -1,6 +1,6 @@
 import os.path
 
-from pyglet.gl import *
+from OpenGL.GL import * # pyglet: from pyglet.gl import *
 from PIL import Image
 
 
@@ -18,7 +18,6 @@ class GLText:
     t.draw..()
 
     """
-
     def __init__(self, font_file_name = "font_proggy_opti_small.txt"):
         """
         load font
@@ -26,7 +25,6 @@ class GLText:
         sometimes the "space" character (ascii 32) is zero-width. if that's
         the case, edit the font file manually, modify the screenWidth column.
         """
-
         self.initialized       = False
 
         self.font_file_name    = font_file_name
@@ -45,22 +43,17 @@ class GLText:
 
         self._load_font_data(self.font_file_name)
 
-
     def init(self):
-
         assert not self.initialized
         self.texture_id  = self._load_texture(os.path.join(os.path.dirname(self.font_file_name), self.texture_file_name))
         self.initialized = True
 
-
     def width(self, text):
         """ return string width in pixels """
-
         str_width = 0
         for c in text:
             str_width += self.char_list[ord(c)].advance[0]
         return str_width
-
 
     # top
 
@@ -113,7 +106,6 @@ class GLText:
         if z is False, opengl depth-testing is disabled for text rendering. (but still.. z_near/z_far clipping occurs)
         assumes some kind of pixel-projection..
         """
-
         assert self.initialized
 
         if z or z is False: self.z       = z
@@ -195,12 +187,10 @@ class GLText:
 
         glPopAttrib()
 
-
     def _load_font_data(self, font_file_name):
         """
         load everything except the texture. for that, you have to call init()
         """
-
         f = file(font_file_name)
 
         f.readline()
@@ -237,10 +227,8 @@ class GLText:
         line = f.readline().split(" ")
         self.ascender, self.descender, self.height = int(line[0]), int(line[1]), int(line[2])
 
-
     def _load_texture(self, texture_file_name):
         """ load and register the texture in opengl. return opengl texture id """
-
         image = Image.open(texture_file_name)
         ix = image.size[0]
         iy = image.size[1]
@@ -250,9 +238,7 @@ class GLText:
         image = image.convert('RGBA')
         imagestring = image.tostring("raw", "RGBA", 0)
 
-        tex_id = c_uint(0)
-        glGenTextures(1, byref(tex_id))
-        tex_id = tex_id.value
+        tex_id = glGenTextures(1) # pyglet: tex_id = c_uint(0); glGenTextures(1, byref(tex_id)); tex_id = tex_id.value
 
         glBindTexture(GL_TEXTURE_2D, tex_id)
 
@@ -265,9 +251,7 @@ class GLText:
 
         return tex_id
 
-
     def _fix_pos(self, x, y, w, positioning):
-
         # positioning
         # first 3 bits - left-right-middle
         # next  4 bits - baseline-top-bottom-middle
@@ -301,7 +285,6 @@ def init(font_path = ""):
     some convenience-routines. just init some default fonts.
     but make sure that opengl-context is active while calling this.
     """
-
     global small
     small = GLText(os.path.join(font_path, "font_proggy_opti_small.txt"))
     small.init()

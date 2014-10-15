@@ -1,6 +1,4 @@
 #
-# copy gltext.py or gltext.so to this folder and run test.py
-#
 # this is pysdl2 based testing skeleton. i ditched pygame because it's not as cross-platform
 # as i'd like (mainly the ridiculous macosx install situation.. X11/XQuartz dependency..?)
 #
@@ -18,6 +16,7 @@ from sdl2 import *
 from OpenGL.GL import *
 
 import gltext
+#import gltext_pyopenglversion # uncomment if you want to test the python version of gltext lib.
 
 
 class FpsCounter:
@@ -70,7 +69,7 @@ class Test:
                 logg.error("vsync failed completely. will munch cpu for lunch.")
 
         self._init_gl()
-        self.gltext = gltext.GLText("../../data/font_proggy_opti_small.txt")
+        self.gltext = gltext.GLText("../data/font_proggy_opti_small.txt")
         self.gltext.init()
 
         # init done. start the mainloop!

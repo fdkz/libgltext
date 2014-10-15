@@ -1,0 +1,4 @@
+*.py[cod]
+pywrapper/build/
+pywrapper/dist/
+pywrapper/*egg-info/
