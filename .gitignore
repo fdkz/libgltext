@@ -2,3 +2,4 @@
 pywrapper/build/
 pywrapper/dist/
 pywrapper/*egg-info/
+pywrapper/gltext.cpp

@@ -1,9 +1,3 @@
-
-cdef extern from "sys_functions.h":
-
-    void cpp_setloggers "setloggers" (int stdout_fileno, int stderr_fileno)
-
-
 cdef extern from "gltext.h":
 
     cdef cppclass cpp_GLText "GLText":
@@ -149,8 +143,3 @@ cdef class GLText:
         elif z is not None:
             self.thisptr.set_z(z)
             self.thisptr.set_depth_test(1)
-
-
-def setloggers(int stdout_fileno, int stderr_fileno):
-#outfile.fileno(), outfile.fileno()):
-    cpp_setloggers(stdout_fileno, stderr_fileno)
