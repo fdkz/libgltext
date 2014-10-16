@@ -9,7 +9,7 @@ A very simple c++ opengl text rendering library with python wrappers. Too simple
 Using
 -----
 
-There's no ``python setup.py install`` support. Just copy the ``pywrappers/gltext/`` directory with prebuilt libraries where it's needed and it'll work on windows/macosx/linux. OR if you're happy to sacrifice some speed, then copy the one-python-file version ``pywrappers/gltext_pyopenglversion/gltext.py``.
+There's no ``python setup.py install`` support. Just copy the ``pywrappers/gltext/`` directory containing the prebuilt libraries where it's needed and it'll work on windows/macosx/linux. OR if you're happy to sacrifice some speed, then copy the one-python-file version ``pywrappers/gltext_pyopenglversion/gltext.py``.
 
 For usage example look into ``pywrappers/example.py``. Users of c++ are surely hardcore enough not to require any additional help (evil laugh).
 
