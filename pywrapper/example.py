@@ -110,7 +110,7 @@ class Test:
 
         t = time.time()
         for i in range(200):
-            tx.drawmm("day %03i" % i, w/2. + 250*math.sin(t*.1+i*0.1)*math.sin(t*.245+i*.01), h/2. + 180*math.cos(t*.1+i*0.01), fgcolor=(1.0, 1.0, 1.0, 1.0), bgcolor=(0.3, 0.4, 0.5, 1.))
+            tx.drawmm("day %03i" % i, w/2. + 250*math.sin(t*.1+i*0.1)*math.sin(t*.245+i*.01), h/2. + 180*math.cos(t*.1+i*0.01), fgcolor=(1., 1.0, 1.0, 1.0), bgcolor=(i/200., 0.4, 0.5, 1.))
 
         tx.drawtl("top-left",     0, 0, fgcolor=(1., 1., 1., 1.0), bgcolor=(0., 0., 0., 0.), z=1000.)
         tx.drawbl("bottom-left",  0, h)

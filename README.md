@@ -3,6 +3,9 @@ libgltext
 
 A very simple c++ opengl text rendering library with python wrappers. Too simple even for a makefile. There's also a pure python implementation under ``pywrappers/gltext_pyopenglversion/``.
 
+![](pywrapper/example.png)
+
+
 Using
 -----
 
@@ -10,7 +13,7 @@ There's no ``python setup.py install`` support. Just copy the ``pywrappers/gltex
 
 For usage example look into ``pywrappers/example.py``. Users of c++ are surely hardcore enough not to require any additional help (evil laugh).
 
-```
+```python
 import gltext
 
 tx = gltext.GLText("../data/font_proggy_opti_small.txt")
@@ -25,7 +28,7 @@ tx.drawtl("below previous line", 100, 100 + tx.height)
 
 The whole API:
 
-```
+```python
 # variables about current font (read-only)
 
 self.height    = 0
